@@ -44,19 +44,5 @@ CREATE TABLE IF NOT exists song_compilation (
 CREATE TABLE IF NOT exists compilation(
 	compilation_id SERIAL primary key,
 	name VARCHAR(100),
-	year_of_issue DATE,
-	song_id INTEGER not null references song(song_id)
-);
-
-CREATE TABLE IF NOT exists song_compilation (
-	song_id INTEGER references song(song_id),
-	compilation_id INTEGER references compilation(compilation_id),
-	constraint pk_2 primary key (song_id, compilation_id)
-);
-
-CREATE TABLE IF NOT exists compilation(
-	compilation_id SERIAL primary key,
-	name VARCHAR(100),
-	year_of_issue DATE,
-	song_id INTEGER not null references song(song_id)
+	year_of_issue DATE
 );
