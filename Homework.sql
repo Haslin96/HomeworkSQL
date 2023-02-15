@@ -28,9 +28,24 @@ CREATE TABLE IF NOT exists album(
 );
 
 CREATE TABLE IF NOT exists song(
-	song_id SERIAL primary key references album(album_id),
+	song_id SERIAL primary key,
 	name VARCHAR(80) not null,
-	duration INTEGER not null
+	duration float not null,
+	album_id integer,
+	FOREIGN key (album_id) references album(album_id)
+);
+
+CREATE TABLE IF NOT exists song_compilation (
+	song_id INTEGER references song(song_id),
+	compilation_id INTEGER references compilation(compilation_id),
+	constraint pk_2 primary key (song_id, compilation_id)
+);
+
+CREATE TABLE IF NOT exists compilation(
+	compilation_id SERIAL primary key,
+	name VARCHAR(100),
+	year_of_issue DATE,
+	song_id INTEGER not null references song(song_id)
 );
 
 CREATE TABLE IF NOT exists song_compilation (
