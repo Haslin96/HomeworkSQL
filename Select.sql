@@ -15,5 +15,5 @@ select name from executor
 where name not like '%% %%';
 
 select name from song
-where name like '%%my%%' and name like '%%мой%%'
+where name like '%%my%%' or name like '%%мой%%'
 
