@@ -1,6 +1,5 @@
 select name, duration from song
-order by duration desc
-limit 1;
+where duration = (select max(duration) from song);
 
 select name from song
 where duration >= '3.30';
@@ -20,16 +19,21 @@ group by genre_id;
 select name, year_of_issue from album
 where year_of_issue >= '01.01.2018' and year_of_issue <= '01.01.2020';
 
-select name,AVG(duration) from album
-join duration  on song_id = album_id
+select name,AVG(duration) from album a
+join song b on a.album_id = b.album_id
 group by name;
 
 select name from executor
-join executor_album  on executor_id = album_id
-where year_of_issue != 2020;
+where name not in (
+    select name from executor
+    join executor_album  on executor_id = album_id
+    where year_of_issue = 2020;
+);
 
 select name from compilation
-join song_compilation  on song_id = compilation_id
+join compilation on compilation_id = song_compilation(compilation_id)
+join song_compilation  on song_id = song(song_id)
 join song  on album_id = album(album_id)
-join album a  on album_id = executor_id
+join album  on album_id = executor_album(album_id)
+join executor_album on executor_id = executor(executor_id)
 where name like 'Plamenev';
