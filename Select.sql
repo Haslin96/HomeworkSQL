@@ -23,17 +23,16 @@ select name,AVG(duration) from album a
 join song b on a.album_id = b.album_id
 group by name;
 
-select name from executor
-where name not in (
-    select name from executor
-    join executor_album  on executor_id = album_id
-    where year_of_issue = 2020;
+SELECT name FROM executor
+WHERE name NOT IN (
+    SELECT name FROM executor
+    JOIN executor_album ON executor_id = album_id
+    WHERE year_of_issue = 2020
 );
 
-select name from compilation
-join compilation on compilation_id = song_compilation(compilation_id)
-join song_compilation  on song_id = song(song_id)
-join song  on album_id = album(album_id)
-join album  on album_id = executor_album(album_id)
-join executor_album on executor_id = executor(executor_id)
-where name like 'Plamenev';
+SELECT name FROM compilation
+JOIN song_compilation ON compilation_id = song_compilation(compilation_id)
+JOIN song ON song_id = song(song_id)
+JOIN album ON album_id = executor_album(album_id)
+JOIN executor_album ON executor_id = executor(executor_id)
+WHERE name LIKE 'Plamenev';
